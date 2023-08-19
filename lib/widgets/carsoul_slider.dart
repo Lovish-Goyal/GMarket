@@ -13,7 +13,7 @@ class Carsoul extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0),
             image: const DecorationImage(
-              image: AssetImage("carsoul/carsoul1.jpg"),
+              image: AssetImage("assets/carsoul/carsoul1.jpg"),
               fit: BoxFit.cover,
             ),
           ),
@@ -25,7 +25,7 @@ class Carsoul extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0),
             image: const DecorationImage(
-              image: AssetImage("carsoul/carsoul2.jpg"),
+              image: AssetImage("assets/carsoul/carsoul2.jpg"),
               fit: BoxFit.cover,
             ),
           ),
@@ -37,7 +37,7 @@ class Carsoul extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0),
             image: const DecorationImage(
-              image: AssetImage("carsoul/carsoul3.jpg"),
+              image: AssetImage("assets/carsoul/carsoul3.jpg"),
               fit: BoxFit.cover,
             ),
           ),
@@ -49,7 +49,7 @@ class Carsoul extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0),
             image: const DecorationImage(
-              image: AssetImage("carsoul/carsoul4.jpg"),
+              image: AssetImage("assets/carsoul/carsoul4.jpg"),
               fit: BoxFit.cover,
             ),
           ),
@@ -61,7 +61,7 @@ class Carsoul extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0),
             image: const DecorationImage(
-              image: AssetImage("carsoul/carsoul5.jpg"),
+              image: AssetImage("assets/carsoul/carsoul5.jpg"),
               fit: BoxFit.cover,
             ),
           ),

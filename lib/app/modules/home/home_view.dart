@@ -28,7 +28,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
         title: Row(
           children: const [
             CircleAvatar(
-              backgroundImage: AssetImage("images/mylogo.jpg"),
+              backgroundImage: AssetImage("assets/images/mylogo.jpg"),
             ),
             SizedBox(
               width: 15,

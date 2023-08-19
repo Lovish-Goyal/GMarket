@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:learn_appwrite/app/modules/home/items/items.dart';
+import 'package:utils_widget/utils_widget.dart';
 import '../../../sale_product/provider.dart';
 
 class Details extends ConsumerStatefulWidget {
@@ -15,6 +16,7 @@ class Details extends ConsumerStatefulWidget {
 }
 
 class _DetailsState extends ConsumerState<Details> {
+  final bool inCart = false;
   @override
   Widget build(BuildContext context) {
     final snapshot = ref.watch(productProvider(widget.productId));
@@ -25,26 +27,6 @@ class _DetailsState extends ConsumerState<Details> {
         }
         return Scaffold(
           backgroundColor: Color.fromARGB(255, 224, 224, 224),
-          appBar: AppBar(
-              automaticallyImplyLeading: false,
-              backgroundColor: Colors.white,
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  IconButton(
-                      color: Colors.black,
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(
-                        Icons.arrow_back,
-                      )),
-                  Text(
-                    "Product Details",
-                    style: TextStyle(color: Colors.black, fontSize: 20),
-                  ),
-                ],
-              )),
           body: Stack(
             children: [
               SingleChildScrollView(
@@ -235,7 +217,7 @@ class _DetailsState extends ConsumerState<Details> {
                 ),
               ),
               Positioned(
-                top: MediaQuery.of(context).size.height / 1.21,
+                top: MediaQuery.of(context).size.height / 1.1,
                 child: Container(
                   height: 70,
                   width: MediaQuery.of(context).size.width,
@@ -248,72 +230,72 @@ class _DetailsState extends ConsumerState<Details> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text(
-                        "Total: Rs.${product.price.toString()} /-",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                      Carthelper(
+                        onpressed: () {
+                          product.inCart
+                              ? showErrorNotice(
+                                  "Error", "Product Already in cart")
+                              : ref
+                                  .read(productStateProvider.notifier)
+                                  .addtocartlist(product);
+                        },
+                        inCart: product.inCart,
+                        icon: Icons.add_shopping_cart,
+                        text: 'Add to Cart',
                       ),
-                      SizedBox(
-                        height: 50,
-                        width: 220,
-                        child: ElevatedButton.icon(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Dialog(
-                                    child: Container(
-                                      padding: EdgeInsets.all(16.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
+                      Carthelper(
+                        onpressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Dialog(
+                                child: Container(
+                                  padding: EdgeInsets.all(16.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        'Developer contact',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF4C53A5),
+                                        ),
+                                      ),
+                                      SizedBox(height: 16),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: const [
                                           Text(
-                                            'Developer contact',
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color(0xFF4C53A5),
-                                            ),
+                                            'Developer: Lovish Goyal',
+                                            style: TextStyle(fontSize: 16),
                                           ),
-                                          SizedBox(height: 16),
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: const [
-                                              Text(
-                                                'Developer: Lovish Goyal',
-                                                style: TextStyle(fontSize: 16),
-                                              ),
-                                              Text(
-                                                'Contact No. 8607605196',
-                                                style: TextStyle(fontSize: 16),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(height: 16),
-                                          ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  Color(0xFF4C53A5),
-                                            ),
-                                            child: Text('Ok'),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
+                                          Text(
+                                            'Contact No. 8607605196',
+                                            style: TextStyle(fontSize: 16),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  );
-                                },
+                                      SizedBox(height: 16),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Color(0xFF4C53A5),
+                                        ),
+                                        child: Text('Ok'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               );
                             },
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xFF4C53A5),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                )),
-                            icon: Icon(FontAwesomeIcons.shop),
-                            label: Text("Buy Now")),
+                          );
+                        },
+                        icon: FontAwesomeIcons.shop,
+                         text: 'Buy Now',
                       )
                     ],
                   ),
@@ -326,5 +308,35 @@ class _DetailsState extends ConsumerState<Details> {
       error: (error, stackTrace) => Text(error.toString()),
       loading: () => Center(child: CircularProgressIndicator()),
     );
+  }
+}
+
+class Carthelper extends ConsumerWidget {
+  final bool inCart;
+  final String text;
+  final IconData icon;
+  final void Function()? onpressed;
+  Carthelper({
+    super.key,
+    required this.text,
+    required this.icon,
+    required this.onpressed,
+    this.inCart = false,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SizedBox(
+        height: 50,
+        width: 150,
+        child: ElevatedButton.icon(
+            onPressed: onpressed,
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF4C53A5),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                )),
+            icon: Icon(icon),
+            label: Text(text)));
   }
 }

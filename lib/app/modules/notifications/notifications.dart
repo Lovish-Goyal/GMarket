@@ -18,14 +18,14 @@ class _NotificationsState extends State<Notifications> {
       body: Column(
         children: [
           Container(
-              margin: const EdgeInsets.only(top: 40),
-              child: Image.asset('images/Emptynotifications.png')),
-          const SizedBox(height: 10),
+              margin: const EdgeInsets.only(top: 160),
+              child: Image.asset('assets/images/Emptynotifications.png')),
+          const SizedBox(height: 20),
           const Text(
             "No Notifications Yet",
             style: TextStyle(color: Colors.black, fontSize: 28,fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 30),
            const Center(
              child: Text(
               " You have no notifications right now",
@@ -39,7 +39,7 @@ class _NotificationsState extends State<Notifications> {
               style: TextStyle(color: Colors.grey, fontSize: 20,),
                      ),
            ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 60),
           GestureDetector(
                           child: Container(
                             alignment: Alignment.center,

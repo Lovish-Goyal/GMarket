@@ -21,7 +21,7 @@ class Items extends ConsumerWidget {
       );
     }
     return GridView.count(
-      childAspectRatio: 0.90,
+      childAspectRatio: 0.80,
       physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
       shrinkWrap: true,
@@ -47,10 +47,6 @@ class Items extends ConsumerWidget {
                         .read(productStateProvider.notifier)
                         .addtowishlist(product);
               },
-              carticonpressed: () {
-                product.inCart
-                    ? showErrorNotice("Error", "Product Already in cart"): ref.read(productStateProvider.notifier).addtocartlist(product);
-              },
               isFav: product.isFav,
             ),
           )
@@ -61,13 +57,11 @@ class Items extends ConsumerWidget {
 
 class ItemList extends StatelessWidget {
   final bool isFav;
-  final bool inCart;
   final String image;
   final String productTitle;
   final int prize;
   final void Function()? hasnavigation;
   final void Function()? wishiconpressed;
-  final void Function()? carticonpressed;
   const ItemList({
     super.key,
     required this.image,
@@ -75,16 +69,14 @@ class ItemList extends StatelessWidget {
     required this.prize,
     required this.hasnavigation,
     required this.wishiconpressed,
-    required this.carticonpressed,
     this.isFav = false,
-    this.inCart = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+      padding: const EdgeInsets.only(left: 10, right: 10,top: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -94,10 +86,9 @@ class ItemList extends StatelessWidget {
         child: Column(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(14),
               child: SizedBox(
-                height: 140,
-                width: 200,
+                height: 100,
                 child: Image.network(
                   image,
                 ),
@@ -109,7 +100,7 @@ class ItemList extends StatelessWidget {
               child: Text(
                 productTitle,
                 style: const TextStyle(
-                  fontSize: 24,
+                  fontSize: 20,
                   color: Color(0xFF4C53A5),
                   fontWeight: FontWeight.bold,
                 ),
@@ -128,7 +119,7 @@ class ItemList extends StatelessWidget {
                     prize.toString(),
                     style: const TextStyle(
                         color: Color(0xFF4C53A5),
-                        fontSize: 15,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),
                   IconButton(
@@ -137,9 +128,6 @@ class ItemList extends StatelessWidget {
                         isFav ? Icons.favorite : Icons.favorite_border,
                         color: isFav ? Colors.red : null,
                       )),
-                  IconButton(
-                      onPressed: carticonpressed,
-                      icon: const Icon(Icons.shopping_cart))
                 ],
               ),
             )
@@ -147,94 +135,5 @@ class ItemList extends StatelessWidget {
         ),
       ),
     );
-    // Container(
-    //   padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-    //   margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-    //   decoration: BoxDecoration(
-    //     color: Colors.white,
-    //     borderRadius: BorderRadius.circular(20),
-    //   ),
-    //   child: Column(
-    //     children: [
-    //       Row(
-    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //         children: [
-    //           Container(
-    //             padding: const EdgeInsets.all(5),
-    //             decoration: BoxDecoration(
-    //               color: const Color(0xFF4C53A5),
-    //               borderRadius: BorderRadius.circular(20),
-    //             ),
-    //             child: const Text(
-    //               "-50%",
-    //               style: TextStyle(
-    //                 fontSize: 14,
-    //                 color: Colors.white,
-    //                 fontWeight: FontWeight.bold,
-    //               ),
-    //             ),
-    //           ),
-    //           const Icon(
-    //             Icons.favorite_border,
-    //             color: Colors.red,
-    //           )
-    //         ],
-    //       ),
-    //       InkWell(
-    //         onTap: () {},
-    //         child: Container(
-    //           margin: const EdgeInsets.all(10),
-    //           child: Image.asset(
-    //             "images/person.jpg",
-    //             height: 100,
-    //             width: 100,
-    //           ),
-    //         ),
-    //       ),
-    //       Container(
-    //         padding: const EdgeInsets.only(bottom: 8),
-    //         alignment: Alignment.centerLeft,
-    //         child: const Text(
-    //           "Product Title",
-    //           style: TextStyle(
-    //             fontSize: 18,
-    //             color: Color(0xFF4C53A5),
-    //             fontWeight: FontWeight.bold,
-    //           ),
-    //         ),
-    //       ),
-    //       Container(
-    //         alignment: Alignment.centerLeft,
-    //         child: const Text(
-    //           "Write description of product",
-    //           style: TextStyle(
-    //             fontSize: 15,
-    //             color: Color(0xFF4C53A5),
-    //           ),
-    //         ),
-    //       ),
-    //       const Padding(
-    //         padding: EdgeInsets.symmetric(vertical: 10),
-    //         child: Row(
-    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //           children: [
-    //             Text(
-    //               "\$55",
-    //               style: TextStyle(
-    //                 fontSize: 16,
-    //                 fontWeight: FontWeight.bold,
-    //                 color: Color(0xFF4C53A5),
-    //               ),
-    //             ),
-    //             Icon(
-    //               Icons.shopping_cart_checkout,
-    //               color: Color(0xFF4C53A5),
-    //             )
-    //           ],
-    //         ),
-    //       )
-    //     ],
-    //   ),
-    // ),;
   }
 }

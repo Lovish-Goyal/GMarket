@@ -13,6 +13,11 @@ class SearchView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF4C53A5),
+        title: Text("Search Items"),
+        centerTitle: true,
+      ),
       body: Container(
         margin: const EdgeInsets.all(20),
         child: FormBuilderTypeAhead<ProductModel?>(

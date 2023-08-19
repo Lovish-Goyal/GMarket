@@ -30,29 +30,32 @@ class _ProfileState extends ConsumerState<Profile> {
                 ClipPath(
                   clipper: CustomShape(),
                   child: Container(
-                    height: 180,
+                    height: 200,
                     color: const Color(0xFF4C53A5),
                   ),
                 ),
-                const Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Profile",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
+                 Align(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 50),
+                      child: const Text(
+                          "Profile",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
                     ),
-                  ),
-                ),
+                ),  
                 Align(
                   alignment: Alignment.center,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 90),
+                    padding: const EdgeInsets.only(top: 110),
                     child: CircleAvatar(
-                      radius: 60,
+                      radius: 80,
                       backgroundColor: Colors.white,
                       child: CircleAvatar(
-                        radius: 50,
+                        radius: 70,
                         backgroundImage: NetworkImage(
                             "https://cloud.appwrite.io/v1/storage/buckets/6478beb17488d9d997b1/files/${user.image}/view?project=6474e356cea4864218e8&mode=admin"),
                       ),
@@ -94,37 +97,37 @@ class _ProfileState extends ConsumerState<Profile> {
               icon: Icons.notifications,
               text: 'Notifications',
               onTap: () => context.push('/notifications'),
-              width: 168,
+              width: 110,
             ),
             ProfileList(
               icon: Icons.list_alt,
               text: 'My Order',
               onTap: () => context.push('/order'),
-              width: 195,
+              width: 135,
             ),
             ProfileList(
               icon: Icons.favorite_border,
               text: 'Wishlist',
               onTap: () => context.push('/wishlist'),
-              width: 201,
+              width: 145,
             ),
             ProfileList(
               icon: Icons.shopping_cart,
               text: 'My Shopping Cart',
               onTap: () => context.push('/cart'),
-              width: 133,
+              width: 75,
             ),
             ProfileList(
               icon: Icons.sailing,
               text: 'Sale Product',
               onTap: () => context.push('/sale'),
-              width: 165,
+              width: 105,
             ),
             ProfileList(
               icon: Icons.logout,
               text: 'Sign Out',
               onTap: () => context.go('/signupPage'),
-              width: 198,
+              width: 138,
             ),
           ],
         ),
@@ -168,7 +171,7 @@ class ProfileList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(
         children: [
           GestureDetector(

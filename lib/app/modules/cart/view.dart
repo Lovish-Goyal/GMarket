@@ -24,79 +24,81 @@ class Cart extends ConsumerWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
-        child: GridView.count(
-            childAspectRatio: 4.0,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: 1,
-            shrinkWrap: true,
-            children: snapshot
-                .map(
-                  (product) => InkWell(
-                    onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Details(product.productId,)));
-          },
-                    child: Container(
-                      margin: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          border:
-                              Border.all(color: const Color(0xFF4C53A5), width: 2),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                  width: 150,
-                                  margin: const EdgeInsets.all(10),
-                                  child: Image.network(
-                                    "https://cloud.appwrite.io/v1/storage/buckets/647d9eb631c5a428748a/files/${product.image}/view?project=6474e356cea4864218e8&mode=admin",
-                                  )),
-                              Container(
-                                margin: const EdgeInsets.all(10),
-                                child: Column(
-                                  children: [
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-                                    Text(
-                                      product.name,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-                                    Text("Price: ${product.price.toString()}"),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-                                    Text(
-                                        "Quantity: ${product.quantity.toString()}")
-                                  ],
+        child: SingleChildScrollView(
+          child: GridView.count(
+              childAspectRatio: 2.5,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 1,
+              shrinkWrap: true,
+              children: snapshot
+                  .map(
+                    (product) => InkWell(
+                      onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Details(product.productId,)));
+            },
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                            border:
+                                Border.all(color: const Color(0xFF4C53A5), width: 2),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                    width: 130,
+                                    margin: const EdgeInsets.all(10),
+                                    child: Image.network(
+                                      "https://cloud.appwrite.io/v1/storage/buckets/647d9eb631c5a428748a/files/${product.image}/view?project=6474e356cea4864218e8&mode=admin",
+                                    )),
+                                Container(
+                                  margin: const EdgeInsets.only(top:10,left: 5),
+                                  child: Column(
+                                    children: [
+                                      const SizedBox(
+                                        height: 12,
+                                      ),
+                                      Text(
+                                        product.name,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const SizedBox(
+                                        height: 12,
+                                      ),
+                                      Text("Price: ${product.price.toString()}"),
+                                      const SizedBox(
+                                        height: 12,
+                                      ),
+                                      Text(
+                                          "Quantity: ${product.quantity.toString()}")
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(right: 20),
-                            child: IconButton(
-                                onPressed: () {
-                                  ref
-                                      .read(productStateProvider.notifier)
-                                      .removefromcartlist(product);
-                                },
-                                icon: const Icon(Icons.delete)),
-                          )
-                        ],
+                              ],
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(right: 20),
+                              child: IconButton(
+                                  onPressed: () {
+                                    ref
+                                        .read(productStateProvider.notifier)
+                                        .removefromcartlist(product);
+                                  },
+                                  icon: const Icon(Icons.delete)),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                )
-                .toList()),
+                  )
+                  .toList()),
+        ),
       ),
     );
   }
@@ -112,8 +114,8 @@ class EmptyCart extends StatelessWidget {
       body: Column(
         children: [
           Container(
-              margin: const EdgeInsets.only(top: 100),
-              child: Image.asset('images/Emptycart.jpg')),
+              margin: const EdgeInsets.only(top: 180),
+              child: Image.asset('assets/images/Emptycart.jpg')),
           const SizedBox(height: 20),
           const Center(
             child: Text(
@@ -127,18 +129,18 @@ class EmptyCart extends StatelessWidget {
           const SizedBox(height: 20),
           const Center(
             child: Text(
-              "Looks like you have no items in your shopping cart",
+              "Looks like you have no items",
+              style: TextStyle(color: Colors.grey, fontSize: 20),
+            ),
+          ),
+           const Center(
+            child: Text(
+              "in your shopping cart",
               style: TextStyle(color: Colors.grey, fontSize: 20),
             ),
           ),
           const SizedBox(
             height: 10,
-          ),
-          const Center(
-            child: Text(
-              "Let`s Shopping more",
-              style: TextStyle(color: Colors.grey, fontSize: 20),
-            ),
           ),
           const SizedBox(height: 40),
           GestureDetector(
