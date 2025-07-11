@@ -6,19 +6,22 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$productListHash() => r'c149b91e5b87096f8e5421dea7d80a4abd344359';
+String _$productListHash() => r'bb77e0408d66e38358663e8c4613eefef60862bf';
 
 /// See also [productList].
 @ProviderFor(productList)
 final productListProvider = FutureProvider<List<ProductModel>>.internal(
   productList,
   name: r'productListProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$productListHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$productListHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef ProductListRef = FutureProviderRef<List<ProductModel>>;
 String _$productHash() => r'f3566e7484e5dacc22f09663837a018e3de0fe96';
 
@@ -43,8 +46,6 @@ class _SystemHash {
   }
 }
 
-typedef ProductRef = AutoDisposeFutureProviderRef<ProductModel?>;
-
 /// See also [product].
 @ProviderFor(product)
 const productProvider = ProductFamily();
@@ -55,21 +56,13 @@ class ProductFamily extends Family<AsyncValue<ProductModel?>> {
   const ProductFamily();
 
   /// See also [product].
-  ProductProvider call(
-    String documentId,
-  ) {
-    return ProductProvider(
-      documentId,
-    );
+  ProductProvider call(String documentId) {
+    return ProductProvider(documentId);
   }
 
   @override
-  ProductProvider getProviderOverride(
-    covariant ProductProvider provider,
-  ) {
-    return call(
-      provider.documentId,
-    );
+  ProductProvider getProviderOverride(covariant ProductProvider provider) {
+    return call(provider.documentId);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -90,24 +83,53 @@ class ProductFamily extends Family<AsyncValue<ProductModel?>> {
 /// See also [product].
 class ProductProvider extends AutoDisposeFutureProvider<ProductModel?> {
   /// See also [product].
-  ProductProvider(
-    this.documentId,
-  ) : super.internal(
-          (ref) => product(
-            ref,
-            documentId,
-          ),
-          from: productProvider,
-          name: r'productProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$productHash,
-          dependencies: ProductFamily._dependencies,
-          allTransitiveDependencies: ProductFamily._allTransitiveDependencies,
-        );
+  ProductProvider(String documentId)
+    : this._internal(
+        (ref) => product(ref as ProductRef, documentId),
+        from: productProvider,
+        name: r'productProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$productHash,
+        dependencies: ProductFamily._dependencies,
+        allTransitiveDependencies: ProductFamily._allTransitiveDependencies,
+        documentId: documentId,
+      );
+
+  ProductProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.documentId,
+  }) : super.internal();
 
   final String documentId;
+
+  @override
+  Override overrideWith(
+    FutureOr<ProductModel?> Function(ProductRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: ProductProvider._internal(
+        (ref) => create(ref as ProductRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        documentId: documentId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<ProductModel?> createElement() {
+    return _ProductProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -123,8 +145,23 @@ class ProductProvider extends AutoDisposeFutureProvider<ProductModel?> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin ProductRef on AutoDisposeFutureProviderRef<ProductModel?> {
+  /// The parameter `documentId` of this provider.
+  String get documentId;
+}
+
+class _ProductProviderElement
+    extends AutoDisposeFutureProviderElement<ProductModel?>
+    with ProductRef {
+  _ProductProviderElement(super.provider);
+
+  @override
+  String get documentId => (origin as ProductProvider).documentId;
+}
+
 String _$productSearchHash() => r'1cf1d69d78d7b48d0bb902e6f6e38db5fd884bce';
-typedef ProductSearchRef = AutoDisposeFutureProviderRef<List<ProductModel>?>;
 
 /// See also [productSearch].
 @ProviderFor(productSearch)
@@ -136,21 +173,15 @@ class ProductSearchFamily extends Family<AsyncValue<List<ProductModel>?>> {
   const ProductSearchFamily();
 
   /// See also [productSearch].
-  ProductSearchProvider call(
-    String query,
-  ) {
-    return ProductSearchProvider(
-      query,
-    );
+  ProductSearchProvider call(String query) {
+    return ProductSearchProvider(query);
   }
 
   @override
   ProductSearchProvider getProviderOverride(
     covariant ProductSearchProvider provider,
   ) {
-    return call(
-      provider.query,
-    );
+    return call(provider.query);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -172,25 +203,54 @@ class ProductSearchFamily extends Family<AsyncValue<List<ProductModel>?>> {
 class ProductSearchProvider
     extends AutoDisposeFutureProvider<List<ProductModel>?> {
   /// See also [productSearch].
-  ProductSearchProvider(
-    this.query,
-  ) : super.internal(
-          (ref) => productSearch(
-            ref,
-            query,
-          ),
-          from: productSearchProvider,
-          name: r'productSearchProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$productSearchHash,
-          dependencies: ProductSearchFamily._dependencies,
-          allTransitiveDependencies:
-              ProductSearchFamily._allTransitiveDependencies,
-        );
+  ProductSearchProvider(String query)
+    : this._internal(
+        (ref) => productSearch(ref as ProductSearchRef, query),
+        from: productSearchProvider,
+        name: r'productSearchProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$productSearchHash,
+        dependencies: ProductSearchFamily._dependencies,
+        allTransitiveDependencies:
+            ProductSearchFamily._allTransitiveDependencies,
+        query: query,
+      );
+
+  ProductSearchProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.query,
+  }) : super.internal();
 
   final String query;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<ProductModel>?> Function(ProductSearchRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: ProductSearchProvider._internal(
+        (ref) => create(ref as ProductSearchRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        query: query,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<ProductModel>?> createElement() {
+    return _ProductSearchProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -206,19 +266,37 @@ class ProductSearchProvider
   }
 }
 
-String _$productStateHash() => r'd2568668d22798b9b065bf9a4eac1b679dbe2eec';
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin ProductSearchRef on AutoDisposeFutureProviderRef<List<ProductModel>?> {
+  /// The parameter `query` of this provider.
+  String get query;
+}
+
+class _ProductSearchProviderElement
+    extends AutoDisposeFutureProviderElement<List<ProductModel>?>
+    with ProductSearchRef {
+  _ProductSearchProviderElement(super.provider);
+
+  @override
+  String get query => (origin as ProductSearchProvider).query;
+}
+
+String _$productStateHash() => r'd0e3992b0598ca5b85649e4f0b3c30ca97a30ede';
 
 /// See also [ProductState].
 @ProviderFor(ProductState)
 final productStateProvider =
     NotifierProvider<ProductState, List<ProductModel>>.internal(
-  ProductState.new,
-  name: r'productStateProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$productStateHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      ProductState.new,
+      name: r'productStateProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$productStateHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ProductState = Notifier<List<ProductModel>>;
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -1,4 +1,4 @@
-# GMarket
+# gmarket
 
 A new Flutter project.
 

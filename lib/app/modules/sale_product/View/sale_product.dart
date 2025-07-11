@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:utils_widget/utils_widget.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../data/env.dart';
-import '../product_model/product_model.dart';
+import '../../../../models/product_model/product_model.dart';
 import '../provider.dart';
 
 class Sale extends ConsumerStatefulWidget {
@@ -42,7 +41,10 @@ class _SaleState extends ConsumerState<Sale> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF4C53A5),
-        leading: IconButton(onPressed: () => context.go('/profile'), icon: const Icon(Icons.arrow_back)),
+        leading: IconButton(
+          onPressed: () => context.go('/profile'),
+          icon: const Icon(Icons.arrow_back),
+        ),
         centerTitle: true,
         title: const Text("Product Description"),
       ),
@@ -59,10 +61,7 @@ class _SaleState extends ConsumerState<Sale> {
                         if (!snapsot.hasData) {
                           return const SizedBox.shrink();
                         }
-                        return Image.memory(
-                          snapsot.data!,
-                          height: 200,
-                        );
+                        return Image.memory(snapsot.data!, height: 200);
                       },
                     )
                   : CircleAvatar(
@@ -73,68 +72,54 @@ class _SaleState extends ConsumerState<Sale> {
                           getImage();
                         },
                         child: const CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 68,
-                            child: Icon(
-                              Icons.add_a_photo_sharp,
-                              size: 30,
-                              color: Color(0xFF4C53A5),
-                            )),
+                          backgroundColor: Colors.white,
+                          radius: 68,
+                          child: Icon(
+                            Icons.add_a_photo_sharp,
+                            size: 30,
+                            color: Color(0xFF4C53A5),
+                          ),
+                        ),
                       ),
                     ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 130),
               child: Text(
                 "Upload Image",
-                style: TextStyle(
-                  color: Color(0xFF4C53A5),
-                  fontSize: 18,
-                ),
+                style: TextStyle(color: Color(0xFF4C53A5), fontSize: 18),
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             SaleList(
               icon: FontAwesomeIcons.idCard,
               text: 'Product Name',
               height: 55,
               controller: pname,
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             SaleList(
               icon: FontAwesomeIcons.rupeeSign,
               text: 'Prize',
               height: 55,
               controller: pprize,
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             SaleList(
               icon: Icons.production_quantity_limits,
               text: 'Quantity',
               height: 55,
               controller: pquantity,
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             SaleList(
               icon: Icons.discount,
               text: 'Discount',
               height: 55,
               controller: pdiscount,
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Container(
               height: 115,
               margin: const EdgeInsets.symmetric(horizontal: 30),
@@ -146,16 +131,20 @@ class _SaleState extends ConsumerState<Sale> {
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
-                    borderSide: const BorderSide(color: Color(0xFF4C53A5), width: 2),
+                    borderSide: const BorderSide(
+                      color: Color(0xFF4C53A5),
+                      width: 2,
+                    ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
-                    borderSide: const BorderSide(color: Color(0xFF4C53A5), width: 2),
+                    borderSide: const BorderSide(
+                      color: Color(0xFF4C53A5),
+                      width: 2,
+                    ),
                   ),
                   labelText: 'Add Desciption',
-                  labelStyle: const TextStyle(
-                    color: Color(0xFF4C53A5),
-                  ),
+                  labelStyle: const TextStyle(color: Color(0xFF4C53A5)),
                   prefixIcon: const Icon(Icons.card_travel),
                   prefixIconColor: const Color(0xFF4C53A5),
                 ),
@@ -164,7 +153,8 @@ class _SaleState extends ConsumerState<Sale> {
             SizedBox(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4C53A5)),
+                  backgroundColor: const Color(0xFF4C53A5),
+                ),
                 onPressed: () {
                   final productModel = ProductModel(
                     name: pname.text,
@@ -182,7 +172,7 @@ class _SaleState extends ConsumerState<Sale> {
                 },
                 child: const Text("Submit"),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -195,12 +185,13 @@ class SaleList extends StatelessWidget {
   final TextEditingController controller;
   final String text;
   final double height;
-  const SaleList(
-      {super.key,
-      required this.icon,
-      required this.text,
-      required this.height,
-      required this.controller});
+  const SaleList({
+    super.key,
+    required this.icon,
+    required this.text,
+    required this.height,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -220,9 +211,7 @@ class SaleList extends StatelessWidget {
             borderSide: const BorderSide(color: Color(0xFF4C53A5), width: 2),
           ),
           labelText: text,
-          labelStyle: const TextStyle(
-            color: Color(0xFF4C53A5),
-          ),
+          labelStyle: const TextStyle(color: Color(0xFF4C53A5)),
           prefixIcon: Icon(icon),
           prefixIconColor: const Color(0xFF4C53A5),
         ),
@@ -230,8 +219,6 @@ class SaleList extends StatelessWidget {
     );
   }
 }
-
-
 
 extension AppwriteIdToUrl on String {
   String get toAppWriteUrl =>

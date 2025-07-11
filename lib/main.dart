@@ -14,13 +14,8 @@ void main() async {
       .setProject(Env.projectId)
       .setSelfSigned(status: true);
   await Hive.initFlutter();
-
   setPathUrlStrategy();
   runApp(
-    const ProviderScope(
-      child: OverlayNotification.global(
-        child: MyApp(),
-      ),
-    ),
+    const ProviderScope(child: OverlayNotification.global(child: MyApp())),
   );
 }

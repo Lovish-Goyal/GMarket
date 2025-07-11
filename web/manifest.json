@@ -1,6 +1,6 @@
 {
-    "name": "learn_appwrite",
-    "short_name": "learn_appwrite",
+    "name": "gmarket",
+    "short_name": "gmarket",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

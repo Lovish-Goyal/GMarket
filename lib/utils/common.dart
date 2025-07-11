@@ -32,8 +32,8 @@ class ProviderLogger extends ProviderObserver {
   ) {
     logger.e(
       "Error: ${provider.name ?? ""}, ${provider.runtimeType}",
-      error.toString(),
-      stackTrace,
+      // error.toString(),
+      // stackTrace,
     );
   }
 }

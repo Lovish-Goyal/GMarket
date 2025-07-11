@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../app/modules/auth/provider.dart';
 import '../app/router.dart';
+import 'package:gmarket/app/modules/auth/provider.dart';
 
 class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
@@ -13,18 +13,19 @@ class MyApp extends ConsumerStatefulWidget {
 class _MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
-    ref.read(userStateProvider.notifier).getCurrentUser();
     super.initState();
+    Future.microtask(() async {
+      await ref.read(userStateProvider.notifier).getCurrentUser();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final router = ref.watch(routerProvider);
     return MaterialApp.router(
-      title: "Backend Practice",
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      // showPerformanceOverlay: true,
+      title: "GMarket",
+      theme: ThemeData(primarySwatch: Colors.blue),
       debugShowCheckedModeBanner: false,
       routerDelegate: router.routerDelegate,
       routeInformationParser: router.routeInformationParser,

@@ -4,11 +4,9 @@ import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart' as model;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:utils_widget/utils_widget.dart';
-
 import '../../../data/env.dart';
 import '../../../utils/apiclient.dart';
 import 'user_model/user_model.dart';
-
 part 'provider.g.dart';
 
 @Riverpod(keepAlive: true)
@@ -28,7 +26,7 @@ class UserState extends _$UserState {
         name: user.fullName,
         userId: user.userId,
       );
-      await ApiClient.account.createEmailSession(
+      await ApiClient.account.createEmailPasswordSession(
         email: user.email,
         password: password,
       );
@@ -65,10 +63,12 @@ class UserState extends _$UserState {
   }
 
   /// SIGN IN METHOD
-  Future<String> signIn(
-      {required String email, required String password}) async {
+  Future<String> signIn({
+    required String email,
+    required String password,
+  }) async {
     try {
-      await ApiClient.account.createEmailSession(
+      await ApiClient.account.createEmailPasswordSession(
         email: email,
         password: password,
       );
@@ -89,9 +89,7 @@ class UserState extends _$UserState {
   /// SIGN OUT METHOD
   Future signOut() async {
     try {
-      await ApiClient.account.deleteSession(
-        sessionId: 'current',
-      );
+      await ApiClient.account.deleteSession(sessionId: 'current');
       state = null;
     } on AppwriteException catch (e) {
       logger.e(e);
@@ -163,6 +161,46 @@ class UserState extends _$UserState {
     return false;
   }
 
+  /// Update all user fields in both Appwrite Account and Database
+  Future<bool> updateUserDetails(UserModel updatedUser) async {
+    try {
+      // Update Appwrite Account: Name, Email, Phone
+      if (updatedUser.fullName != state?.fullName) {
+        await updateUserName(updatedUser.fullName);
+      }
+      if (updatedUser.email != state?.email) {
+        await ApiClient.account.updateEmail(
+          email: updatedUser.email,
+          password: 'YOUR_VERIFICATION_PASSWORD', // Optional if needed
+        );
+      }
+      if (updatedUser.phone.isNotEmpty && updatedUser.phone != state?.phone) {
+        await updateUserPhone(updatedUser.phone, 'YOUR_VERIFICATION_PASSWORD');
+      }
+
+      // Update Appwrite Database (user collection)
+      await ApiClient.database.updateDocument(
+        databaseId: Env.mainDatabaseId,
+        collectionId: "64818336279e4e2077ac",
+        documentId: updatedUser.userId,
+        data: updatedUser.toJson(),
+      );
+
+      // Optionally update preferences
+      await ApiClient.account.updatePrefs(prefs: updatedUser.toJson());
+
+      // Set new state
+      state = updatedUser;
+
+      logger.i("User updated successfully.");
+      return true;
+    } catch (e, st) {
+      logger.e("Error updating user details $e and $st");
+      showErrorNotice("Error", e.toString());
+      return false;
+    }
+  }
+
   /// UPDATE USER PREFERENCES
   Future<model.User?> updateUserPre(UserModel user) async {
     try {
@@ -215,10 +253,15 @@ class UserState extends _$UserState {
     required String userId,
   }) async {
     try {
-      model.Token token = await ApiClient.account.createPhoneSession(
-        phone: phone,
+      // model.Token token = await ApiClient.account.createPhoneSession(
+      //   phone: phone,
+      //   userId: userId,
+      // );
+      model.Token token = await ApiClient.account.createPhoneToken(
         userId: userId,
+        phone: phone,
       );
+
       logger.v(token.toMap());
       return token;
     } on AppwriteException catch (e) {
@@ -265,15 +308,12 @@ class PhoneAuthModel {
   String? code;
   model.Token? token;
 
-  PhoneAuthModel({
-    this.phone,
-    this.code,
-    this.token,
-  });
+  PhoneAuthModel({this.phone, this.code, this.token});
 }
 
-final phoneAuthModelProvider =
-    StateProvider<PhoneAuthModel>((ref) => PhoneAuthModel());
+final phoneAuthModelProvider = StateProvider<PhoneAuthModel>(
+  (ref) => PhoneAuthModel(),
+);
 
 @Riverpod(keepAlive: true)
 class Admin extends _$Admin {

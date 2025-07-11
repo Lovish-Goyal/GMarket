@@ -32,15 +32,15 @@ Future<String> signUp({
 ///login method
 Future<String> signIn({required String email, required String password}) async {
   try {
-    final result = await ApiClient.account.createEmailSession(
+    final result = await ApiClient.account.createEmailPasswordSession(
       email: email,
       password: password,
     );
-   // print(result.toMap());
+    // print(result.toMap());
     return result.$id;
   } on AppwriteException catch (error) {
     Logger().v(error);
-   // print(error.message);
+    // print(error.message);
     return "$error";
   }
 }

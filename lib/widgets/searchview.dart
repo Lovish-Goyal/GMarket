@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:form_builder_extra_fields/form_builder_extra_fields.dart';
+import 'package:gmarket/app/modules/sale_product/View/sale_product.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:learn_appwrite/app/modules/home/items/ItemDetail/detail.dart';
-import 'package:learn_appwrite/app/modules/sale_product/View/sale_product.dart';
-import 'package:learn_appwrite/app/modules/sale_product/provider.dart';
-
-import '../app/modules/sale_product/product_model/product_model.dart';
+import '../models/product_model/product_model.dart';
+import '../app/modules/sale_product/provider.dart';
+import '../features/products/product_details/product_details_view.dart';
 
 class SearchView extends ConsumerWidget {
   const SearchView({super.key});
@@ -40,13 +39,17 @@ class SearchView extends ConsumerWidget {
           },
           onSuggestionSelected: (suggestion) {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Details(suggestion!.productId,)));
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    ProductDetailsScreen(suggestion!.productId),
+              ),
+            );
           },
           suggestionsCallback: (pattern) async {
-            final snapshot =
-                await ref.watch(productSearchProvider(pattern).future);
+            final snapshot = await ref.watch(
+              productSearchProvider(pattern).future,
+            );
             return snapshot ?? [];
           },
           selectionToTextTransformer: (suggestion) => suggestion?.name ?? "",
