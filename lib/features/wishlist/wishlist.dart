@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gmarket/app/modules/sale_product/provider.dart';
-import '../products/product_details/product_details_view.dart';
-import '../products/products_listview.dart';
+import '../products/widgets/product_details_view.dart';
+import '../products/widgets/products_listview.dart';
 import 'providers/provider.dart';
 
 final wishlistSearchProvider = StateProvider<String>((ref) => '');

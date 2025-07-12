@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gmarket/widgets/custom_snackbar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:utils_widget/utils_widget.dart';
@@ -21,9 +22,9 @@ class ProfileNotifier extends _$ProfileNotifier {
       final response = await picker.pickImage(source: ImageSource.gallery);
       if (response != null) {
         final bytes = await response.readAsBytes();
-        showInfoNotice("Info", "Uploading image...");
+        customInfoNotice("Uploading image...");
         await imageUpload(bytes, user, ref);
-        showSuccessNotice("Success", "Image uploaded successfully");
+        customSuccessNotice("Image uploaded successfully");
       }
     } catch (e) {
       logger.e(e);

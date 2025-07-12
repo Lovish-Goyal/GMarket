@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/modules/sale_product/provider.dart';
-import '../../products/product_details/product_details_view.dart';
+import '../../products/widgets/product_details_view.dart';
 
 class PopularProductsView extends ConsumerWidget {
   const PopularProductsView({super.key});

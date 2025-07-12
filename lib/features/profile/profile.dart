@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gmarket/features/profile/editprofile.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../app/router.dart';
 import '../../app/modules/auth/provider.dart';
 
@@ -47,7 +47,12 @@ class _ProfileState extends ConsumerState<Profile> {
                   top: 40,
                   child: IconButton(
                     onPressed: () {
-                      context.go('/editprofile');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditPage(user: user),
+                        ),
+                      );
                     },
                     icon: Icon(Icons.edit, size: 20, color: Colors.white),
                   ),
@@ -92,25 +97,11 @@ class _ProfileState extends ConsumerState<Profile> {
             ),
 
             const SizedBox(height: 10),
-            ProfileList(
-              icon: Icons.notifications,
-              text: 'Notifications',
-              onTap: () => context.push('/notifications'),
-            ),
+
             ProfileList(
               icon: Icons.list_alt,
               text: 'My Order',
               onTap: () => context.push('/order'),
-            ),
-            ProfileList(
-              icon: Icons.favorite_border,
-              text: 'Wishlist',
-              onTap: () => context.push('/wishlist'),
-            ),
-            ProfileList(
-              icon: Icons.shopping_cart,
-              text: 'My Shopping Cart',
-              onTap: () => context.push('/cart'),
             ),
             ProfileList(
               icon: Icons.sailing,
@@ -118,9 +109,25 @@ class _ProfileState extends ConsumerState<Profile> {
               onTap: () => context.push('/sale'),
             ),
             ProfileList(
+              icon: Icons.person,
+              text: 'About us',
+              onTap: () => context.push('/about'),
+            ),
+            ProfileList(
+              icon: Icons.contact_mail,
+              text: 'Contact us',
+              onTap: () => context.push('/contact'),
+            ),
+            ProfileList(
+              icon: Icons.document_scanner,
+              text: 'Terms and Conditions',
+              onTap: () => context.push('/termsAndConditions'),
+            ),
+            ProfileList(
               icon: Icons.logout,
               text: 'Sign Out',
-              onTap: () => context.go('/signupPage'),
+              onTap: () {},
+              color: const Color.fromARGB(255, 201, 64, 54),
             ),
           ],
         ),
@@ -152,12 +159,15 @@ class CustomShape extends CustomClipper<Path> {
 class ProfileList extends StatelessWidget {
   final IconData icon;
   final String text;
-  final onTap;
+  final VoidCallback onTap;
+  final Color color;
+
   const ProfileList({
     super.key,
     required this.icon,
     required this.text,
     required this.onTap,
+    this.color = const Color(0xFF4C53A5),
   });
 
   @override
@@ -172,7 +182,7 @@ class ProfileList extends StatelessWidget {
               height: 60,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color(0xFF4C53A5),
+                color: color,
               ),
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 30),

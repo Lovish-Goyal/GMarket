@@ -1,224 +1,13 @@
-// // ignore_for_file: prefer_typing_uninitialized_variables
-
-// import 'package:flutter/material.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-// import '../../app/modules/auth/provider.dart';
-// import 'profile.dart';
-// import 'providers/provider.dart';
-
-// class EditPage extends ConsumerStatefulWidget {
-//   const EditPage({super.key});
-
-//   @override
-//   ConsumerState<EditPage> createState() => _EditPageState();
-// }
-
-// class _EditPageState extends ConsumerState<EditPage> {
-//   TextEditingController name = TextEditingController();
-//   TextEditingController email = TextEditingController();
-//   TextEditingController phone = TextEditingController();
-//   TextEditingController city = TextEditingController();
-//   TextEditingController pinCode = TextEditingController();
-
-//   final GlobalKey<FormState> fromKey = GlobalKey<FormState>();
-//   @override
-//   Widget build(BuildContext context) {
-//     final user = ref.watch(userStateProvider);
-//     final isUploading = ref.watch(profileNotifierProvider);
-//     name.text = user?.fullName ?? "";
-//     return Form(
-//       key: fromKey,
-//       child: Scaffold(
-//         body: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             Stack(
-//               children: [
-//                 ClipPath(
-//                   clipper: CustomShape(),
-//                   child: Container(height: 250, color: const Color(0xFF4C53A5)),
-//                 ),
-//                 Container(
-//                   margin: const EdgeInsets.only(top: 20),
-//                   child: const Center(
-//                     child: Text(
-//                       "Edit Profile",
-//                       style: TextStyle(fontSize: 30, color: Colors.white),
-//                     ),
-//                   ),
-//                 ),
-//                 Padding(
-//                   padding: const EdgeInsets.only(top: 80),
-//                   child: Center(
-//                     child: CircleAvatar(
-//                       radius: 65,
-//                       backgroundColor: Colors.white,
-//                       child: CircleAvatar(
-//                         radius: 60,
-//                         backgroundImage: NetworkImage(
-//                           'https://cloud.appwrite.io/v1/storage/buckets/6478beb17488d9d997b1/files/${user?.image}/view?project=6474e356cea4864218e8&mode=admin',
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//                 Container(
-//                   height: 45,
-//                   width: 45,
-//                   margin: const EdgeInsets.only(top: 165, left: 270),
-//                   decoration: BoxDecoration(
-//                     borderRadius: BorderRadius.circular(100),
-//                     color: Colors.white,
-//                     border: Border.all(color: Colors.white, width: 2),
-//                   ),
-//                   child: isUploading
-//                       ? const CircularProgressIndicator()
-//                       : IconButton(
-//                           color: const Color(0xFF4C53A5),
-//                           icon: const Icon(FontAwesomeIcons.pencil),
-//                           onPressed: () => ref
-//                               .read(profileNotifierProvider.notifier)
-//                               .updateProfilePicture(user!, ref),
-//                           // async {
-//                           //   final ImagePicker picker = ImagePicker();
-//                           //   final response =
-//                           //       await picker.pickImage(source: ImageSource.gallery);
-//                           //   if (response == null) {
-//                           //     return;
-//                           //   }
-//                           //   final bytes = await response.readAsBytes();
-//                           //   final file = await ApiClient.storage.createFile(
-//                           //     bucketId: '6478beb17488d9d997b1',
-//                           //     fileId: ID.unique(),
-//                           //     file: InputFile.fromBytes(
-//                           //       bytes: bytes,
-//                           //       filename: response.name.isNotEmpty
-//                           //           ? response.name
-//                           //           : 'image.jpg',
-//                           //     ),
-//                           //   );
-//                           //   print(file.toMap());
-//                           // },
-//                         ),
-//                 ),
-//               ],
-//             ),
-//             Expanded(
-//               child: Column(
-//                 children: [
-//                   EditProfileList(
-//                     initialvalue: user!.fullName,
-//                     text: 'Name',
-//                     icon: Icons.person_outlined,
-//                     controller: name,
-//                     onsaved: (newValue) => user.copyWith(fullName: newValue),
-//                   ),
-//                   const SizedBox(height: 15),
-//                   EditProfileList(
-//                     initialvalue: user.email,
-//                     text: 'Email',
-//                     icon: Icons.mail,
-//                     controller: email,
-//                     onsaved: (newValue) => user.copyWith(email: newValue),
-//                   ),
-//                   const SizedBox(height: 15),
-//                   EditProfileList(
-//                     initialvalue: user.phone,
-//                     text: 'Phone',
-//                     icon: Icons.phone,
-//                     controller: phone,
-//                     keyboardtype: TextInputType.number,
-//                     onsaved: (newValue) => user.copyWith(phone: newValue),
-//                   ),
-//                   const SizedBox(height: 15),
-//                   EditProfileList(
-//                     initialvalue: user.address,
-//                     text: 'Address',
-//                     icon: Icons.place,
-//                     controller: city,
-//                     onsaved: (newValue) => user.copyWith(address: newValue),
-//                   ),
-//                   const SizedBox(height: 25),
-//                   SizedBox(
-//                     height: 35,
-//                     width: 100,
-//                     child: ElevatedButton(
-//                       style: ElevatedButton.styleFrom(
-//                         backgroundColor: const Color(0xFF4C53A5),
-//                       ),
-//                       onPressed: () {
-//                         fromKey.currentState?.save();
-//                         ref
-//                             .read(userStateProvider.notifier)
-//                             .updateUserName(user.fullName);
-//                       },
-//                       child: const Text("Update"),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class EditProfileList extends StatelessWidget {
-//   final IconData icon;
-//   final String text;
-//   final TextEditingController controller;
-//   final keyboardtype;
-//   final onsaved;
-//   final initialvalue;
-//   const EditProfileList({
-//     super.key,
-//     required this.text,
-//     required this.icon,
-//     required this.controller,
-//     this.keyboardtype,
-//     required this.onsaved,
-//     this.initialvalue,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       margin: const EdgeInsets.only(left: 30, right: 30, top: 20),
-//       child: TextFormField(
-//         keyboardType: keyboardtype,
-//         // controller: controller,
-//         initialValue: initialvalue,
-//         onSaved: onsaved,
-//         decoration: InputDecoration(
-//           labelText: text,
-//           labelStyle: const TextStyle(color: Color(0xFF4C53A5)),
-//           focusedBorder: OutlineInputBorder(
-//             borderSide: const BorderSide(width: 3, color: Color(0xFF4C53A5)),
-//             borderRadius: BorderRadius.circular(50.0),
-//           ),
-//           enabledBorder: OutlineInputBorder(
-//             borderSide: const BorderSide(width: 3, color: Color(0xFF4C53A5)),
-//             borderRadius: BorderRadius.circular(50.0),
-//           ),
-//           prefixIcon: Icon(icon, color: const Color(0xFF4C53A5)),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gmarket/app/modules/auth/user_model/user_model.dart';
 import '../../app/modules/auth/provider.dart';
 import 'profile.dart';
 import 'providers/provider.dart';
 
 class EditPage extends ConsumerStatefulWidget {
-  const EditPage({super.key});
+  final UserModel user;
+  const EditPage({super.key, required this.user});
 
   @override
   ConsumerState<EditPage> createState() => _EditPageState();
@@ -266,66 +55,85 @@ class _EditPageState extends ConsumerState<EditPage> {
         key: formKey,
         child: Column(
           children: [
-            Stack(
-              children: [
-                ClipPath(
-                  clipper: CustomShape(),
-                  child: Container(height: 250, color: const Color(0xFF4C53A5)),
-                ),
-                const Positioned(
-                  top: 50,
-                  left: 0,
-                  right: 0,
-                  child: Center(
-                    child: Text(
-                      "Edit Profile",
-                      style: TextStyle(fontSize: 28, color: Colors.white),
+            SizedBox(
+              height: 280,
+              child: Stack(
+                children: [
+                  ClipPath(
+                    clipper: CustomShape(),
+                    child: Container(
+                      height: 250,
+                      color: const Color(0xFF4C53A5),
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 100,
-                  left: 0,
-                  right: 0,
-                  child: CircleAvatar(
-                    radius: 65,
-                    backgroundColor: Colors.white,
+                  Positioned(
+                    top: 40,
+                    left: 8,
+                    child: Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(Icons.arrow_back, color: Colors.white),
+                        ),
+                        Text(
+                          "Edit Profile",
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    top: 110,
+                    left: 0,
+                    right: 0,
                     child: CircleAvatar(
-                      radius: 60,
-                      backgroundImage: NetworkImage(
-                        'https://cloud.appwrite.io/v1/storage/buckets/6478beb17488d9d997b1/files/${user.image}/view?project=6474e356cea4864218e8&mode=admin',
+                      radius: 80,
+                      backgroundColor: Colors.white,
+                      child: CircleAvatar(
+                        radius: 75,
+                        backgroundImage: NetworkImage(
+                          'https://cloud.appwrite.io/v1/storage/buckets/6478beb17488d9d997b1/files/${user.image}/view?project=6474e356cea4864218e8&mode=admin',
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 175,
-                  right: MediaQuery.of(context).size.width / 2 - 20,
-                  child: isUploading
-                      ? const CircularProgressIndicator()
-                      : GestureDetector(
-                          onTap: () => ref
-                              .read(profileNotifierProvider.notifier)
-                              .updateProfilePicture(user, ref),
-                          child: Container(
-                            height: 40,
-                            width: 40,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              FontAwesomeIcons.pencil,
-                              color: Color(0xFF4C53A5),
-                              size: 18,
-                            ),
-                          ),
-                        ),
-                ),
-              ],
+                ],
+              ),
             ),
 
-            const SizedBox(height: 20),
+            SizedBox(
+              height: 40,
+              width: 150,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF4C53A5),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () => ref
+                    .read(profileNotifierProvider.notifier)
+                    .updateProfilePicture(user, ref),
+                child: isUploading
+                    ? CircularProgressIndicator(color: Colors.white)
+                    : Text(
+                        "CHANGE PICTURE",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+              ),
+            ),
+
+            SizedBox(height: 20),
 
             // Form Fields
             EditProfileField(
@@ -333,29 +141,33 @@ class _EditPageState extends ConsumerState<EditPage> {
               label: 'Name',
               icon: Icons.person,
             ),
+            const SizedBox(height: 8),
             EditProfileField(
               controller: emailController,
               label: 'Email',
               icon: Icons.mail,
             ),
+            const SizedBox(height: 8),
             EditProfileField(
               controller: phoneController,
               label: 'Phone',
               icon: Icons.phone,
               keyboardType: TextInputType.phone,
             ),
+            const SizedBox(height: 8),
             EditProfileField(
               controller: addressController,
               label: 'Address',
               icon: Icons.place,
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 8),
 
             // Update Button
-            SizedBox(
-              height: 40,
-              width: 120,
+            Container(
+              height: 50,
+              width: double.infinity,
+              margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF4C53A5),
@@ -378,7 +190,14 @@ class _EditPageState extends ConsumerState<EditPage> {
                     Navigator.pop(context);
                   }
                 },
-                child: const Text("Update"),
+                child: const Text(
+                  "UPDATE",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
               ),
             ),
           ],
