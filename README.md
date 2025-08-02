@@ -32,10 +32,10 @@ flutter pub get
 
 ### 3. **Setup .env file**
 
-PROJECT_ID=
-ENDPOINT=
-USER_COLLECTION_ID=
-MAIN_DATABASE_ID=
+PROJECT_ID=<br>
+ENDPOINT=<br>
+USER_COLLECTION_ID=<br>
+MAIN_DATABASE_ID=<br>
 
 ### 4. **Run the App**
 
