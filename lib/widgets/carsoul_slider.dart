@@ -14,7 +14,7 @@ class Carsoul extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.0),
             image: const DecorationImage(
               image: AssetImage("assets/carsoul/carsoul1.jpg"),
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
           ),
         ),
@@ -26,7 +26,7 @@ class Carsoul extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.0),
             image: const DecorationImage(
               image: AssetImage("assets/carsoul/carsoul2.jpg"),
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
           ),
         ),
@@ -38,7 +38,7 @@ class Carsoul extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.0),
             image: const DecorationImage(
               image: AssetImage("assets/carsoul/carsoul3.jpg"),
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
           ),
         ),
@@ -49,20 +49,8 @@ class Carsoul extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0),
             image: const DecorationImage(
-              image: AssetImage("assets/carsoul/carsoul4.jpg"),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-
-        //5th Image of Slider
-        Container(
-          margin: const EdgeInsets.all(6.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.0),
-            image: const DecorationImage(
               image: AssetImage("assets/carsoul/carsoul5.jpg"),
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
           ),
         ),

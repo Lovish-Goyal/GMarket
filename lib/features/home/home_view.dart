@@ -5,7 +5,7 @@ import 'package:gmarket/app/modules/sale_product/provider.dart';
 import 'package:go_router/go_router.dart';
 import '../../widgets/carsoul_slider.dart';
 import '../cart/providers/provider.dart';
-import '../products/widgets/products_listview.dart';
+import '../products/products_listview.dart';
 import 'widgets/popular_products.dart';
 
 class HomeView extends ConsumerStatefulWidget {
@@ -256,17 +256,17 @@ class _HomeViewState extends ConsumerState<HomeView> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "View All",
-                          style: TextStyle(
-                            color: Color(0xFF6366F1),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
+                      // TextButton(
+                      //   onPressed: () {},
+                      //   child: Text(
+                      //     "View All",
+                      //     style: TextStyle(
+                      //       color: Color(0xFF6366F1),
+                      //       fontSize: 14,
+                      //       fontWeight: FontWeight.w600,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                   SizedBox(height: 12),
@@ -303,17 +303,17 @@ class _HomeViewState extends ConsumerState<HomeView> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "View All",
-                          style: TextStyle(
-                            color: Color(0xFF6366F1),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
+                      // TextButton(
+                      //   onPressed: () {},
+                      //   child: Text(
+                      //     "View All",
+                      //     style: TextStyle(
+                      //       color: Color(0xFF6366F1),
+                      //       fontSize: 14,
+                      //       fontWeight: FontWeight.w600,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                   SizedBox(height: 12),

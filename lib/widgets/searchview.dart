@@ -4,7 +4,7 @@ import 'package:gmarket/app/modules/sale_product/View/sale_product.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../models/product_model/product_model.dart';
 import '../app/modules/sale_product/provider.dart';
-import '../features/products/widgets/product_details_view.dart';
+import '../features/products/product_details/product_details_view.dart';
 
 class SearchView extends ConsumerWidget {
   const SearchView({super.key});

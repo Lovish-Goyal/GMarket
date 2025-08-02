@@ -54,6 +54,8 @@ dependencies:
   json_annotation: ^4.9.0
   riverpod_generator: ^2.2.3
   envied_generator: ^1.1.1
+  razorpay_flutter: ^1.4.0
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +63,11 @@ dev_dependencies:
   build_runner: ^2.4.7
   freezed: ^2.4.5
   json_serializable: ^6.7.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/app_icon.jpg"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -84,6 +91,7 @@ flutter:
   assets:
     - assets/images/
     - assets/carsoul/
+    - assets/icon/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

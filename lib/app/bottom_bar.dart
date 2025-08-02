@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../features/home/home_view.dart';
 import '../features/profile/profile.dart';
 import '../features/wishlist/wishlist.dart';
+import 'modules/myorder/my_order.dart';
 import 'router.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -17,7 +18,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   static const List<Widget> _widgetOptions = <Widget>[
     HomeView(),
     Wishlist(),
-    Wishlist(),
+    MyOrders(),
     Profile(),
   ];
 

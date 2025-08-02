@@ -1,16 +1,44 @@
-# gmarket
+# 🛒 GMarket – Flutter E-commerce App
 
-A new Flutter project.
+GMarket is a modern e-commerce mobile application built using **Flutter** and powered by **Appwrite** for backend services. It includes user authentication, product browsing, cart management, and a planned integration with **Razorpay** for payments.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 Features
 
-A few resources to get you started if this is your first Flutter project:
+- 👤 User Signup & Login (Appwrite Auth)
+- 📦 Product List & Details
+- 🛒 Add to Cart with Quantity
+- 📱 Clean UI with Bottom Navigation
+- 💳 Razorpay (mock/demo implemented, full integration coming soon)
+- 🌐 Appwrite backend (local & production-ready)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🧪 Getting Started
+
+### 1. **Clone the repo**
+
+```bash
+git clone https://github.com/your-username/gmarket.git
+cd gmarket
+```
+
+### 2. **Get the dependencies**
+
+```bash
+flutter pub get
+```
+
+### 3. **Setup .env file**
+
+PROJECT_ID=
+ENDPOINT=
+USER_COLLECTION_ID=
+MAIN_DATABASE_ID=
+
+### 4. **Run the App**
+
+```bash
+flutter run
+```

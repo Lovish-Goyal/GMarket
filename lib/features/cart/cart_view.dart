@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gmarket/features/products/widgets/product_details_view.dart';
+import 'package:gmarket/features/products/product_details/product_details_view.dart';
 import 'package:go_router/go_router.dart';
 import '../../app/router.dart';
-import '../../app/modules/sale_product/provider.dart';
 import 'providers/provider.dart';
 
 class CartView extends ConsumerWidget {

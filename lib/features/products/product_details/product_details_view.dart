@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gmarket/features/products/widgets/products_listview.dart';
+import 'package:gmarket/features/products/products_listview.dart';
+import 'package:gmarket/utils/razorpay_service.dart';
 import 'package:utils_widget/utils_widget.dart';
 import '../../../../app/modules/sale_product/provider.dart';
 
@@ -15,6 +16,21 @@ class ProductDetailsScreen extends ConsumerStatefulWidget {
 
 class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
   int quantity = 1;
+  late RazorpayService _razorpayService;
+
+  @override
+  void initState() {
+    super.initState();
+    _razorpayService = RazorpayService();
+    _razorpayService.initRazorpay();
+  }
+
+  @override
+  void dispose() {
+    _razorpayService.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final snapshot = ref.watch(productProvider(widget.productId));
@@ -33,6 +49,12 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
 
         return Scaffold(
           backgroundColor: const Color.fromARGB(255, 240, 240, 240),
+          appBar: AppBar(
+            title: Text(
+              product.name,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+          ),
           body: Stack(
             children: [
               SingleChildScrollView(
@@ -40,12 +62,12 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                   children: [
                     // Product Image
                     Container(
-                      height: MediaQuery.of(context).size.height / 1.8,
+                      height: MediaQuery.of(context).size.height / 2,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: NetworkImage(imageUrl),
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
                       ),
                     ),
@@ -56,51 +78,6 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Title & Quantity
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  product.name,
-                                  style: const TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.remove_circle_outline,
-                                    ),
-                                    onPressed: () {
-                                      if (quantity < 2) {
-                                        return;
-                                      } else {
-                                        setState(() {
-                                          quantity--;
-                                        });
-                                      }
-                                    },
-                                  ),
-                                  Text('$quantity'),
-                                  IconButton(
-                                    icon: const Icon(Icons.add_circle_outline),
-                                    onPressed: () {
-                                      setState(() {
-                                        quantity++;
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-
-                          const SizedBox(height: 10),
-
                           // Description
                           const Text(
                             "Description",
@@ -108,16 +85,17 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
                             ),
-                            maxLines: 3,
+
                             overflow: TextOverflow.ellipsis,
                           ),
-                          const SizedBox(height: 4),
+                          const SizedBox(height: 8),
                           Text(
                             product.description,
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.black54,
                             ),
+                            maxLines: 3,
                           ),
                           const SizedBox(height: 16),
                           Row(
@@ -136,16 +114,55 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                               }
                             }),
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 8),
 
-                          Text(
-                            "Rs. ${product.price.toStringAsFixed(2)}",
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Rs. ${product.price.toStringAsFixed(2)}",
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        icon: const Icon(
+                                          Icons.remove_circle_outline,
+                                        ),
+                                        onPressed: () {
+                                          if (quantity < 2) {
+                                            return;
+                                          } else {
+                                            setState(() {
+                                              quantity--;
+                                            });
+                                          }
+                                        },
+                                      ),
+                                      Text('$quantity'),
+                                      IconButton(
+                                        icon: const Icon(
+                                          Icons.add_circle_outline,
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            quantity++;
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 16),
 
                           SizedBox(
                             height: 70,
@@ -179,7 +196,11 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                                   inCart: product.inCart,
                                   icon: Icons.monetization_on,
                                   text: "Buy Now",
-                                  onpressed: () {},
+                                  onpressed: () {
+                                    _razorpayService.openCheckout(
+                                      product.price,
+                                    );
+                                  },
                                 ),
                               ],
                             ),
@@ -203,21 +224,6 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                   ],
                 ),
               ),
-              Positioned(
-                top: 30,
-                left: 10,
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.arrow_back, size: 30, color: Colors.white),
-                ),
-              ),
-              // Positioned(
-              //   bottom: 0,
-              //   left: 0,
-              //   right: 0,
-              //   child:   ),
             ],
           ),
         );
